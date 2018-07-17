@@ -4,6 +4,8 @@ const int dirB = 13;
 const int pwmA = 3;
 const int pwmB = 11;
 
+int ticks = 0;
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -20,7 +22,6 @@ void loop() {
   if (Serial.available() > 0) {
     String cmd = "";
     cmd = Serial.readString();
-    Serial.println(cmd);
 
     if (cmd == "FORWARD") {
       digitalWrite(dirA, 1);
@@ -41,22 +42,26 @@ void loop() {
       digitalWrite(pwmB, 0);
     }
 
-    if (cmd == "LEFT") {
+    if (cmd == "RIGHT") {
       digitalWrite(dirA, 1);
       digitalWrite(dirB, 0);
       digitalWrite(pwmA, 1);
       digitalWrite(pwmB ,1);
     }
 
-    if (cmd == "RIGHT") {
+    if (cmd == "LEFT") {
       digitalWrite(dirA, 0);
       digitalWrite(dirB, 1);
       digitalWrite(pwmA, 1);
       digitalWrite(pwmB ,1);
     }
-  }
-  
-  // put your main code here, to run repeatedly:
-  double val = (analogRead(2))/2;
-  Serial.println(val);
+  } else {
+    if (ticks == 100000) {
+      // put your main code here, to run repeatedly:
+      double val = (analogRead(2))/2;
+      Serial.println(val);
+      ticks = 0;
+    }
+    ticks++;
+  }  
 }
