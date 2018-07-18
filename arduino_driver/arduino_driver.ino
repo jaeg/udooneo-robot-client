@@ -22,7 +22,6 @@ void loop() {
   if (Serial.available() > 0) {
     String cmd = "";
     cmd = Serial.readString();
-
     if (cmd == "FORWARD") {
       digitalWrite(dirA, 1);
       digitalWrite(dirB, 1);
